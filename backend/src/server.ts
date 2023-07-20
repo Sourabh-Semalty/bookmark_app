@@ -1,8 +1,21 @@
-import express from "express";
+import express, { urlencoded } from "express";
+import cors from "cors";
+import bookmark from "./routes/bookmark";
 import connectDB from "./config/db";
 
-const PORT = 5000;
 const app = express();
+const PORT = 5000;
+
+// middleware
+app.use(
+  cors({
+    origin: "*",
+    credentials: true,
+  })
+);
+app.use(express.urlencoded());
+app.use(express.json());
+app.use("/api/bookmark", bookmark);
 
 connectDB()
   .then(() => {
